@@ -1,0 +1,85 @@
+clear all; close all; clc;
+
+% data = dlmread('D:\Haji Data\Graph_Datasets\group_avg_mri_2.txt');
+% data = dlmread('D:\Haji Data\Graph_Datasets\GroupAverage_rsfMRI_weighted.txt');
+%  data = dlmread('D:\Haji Data\Graph_Datasets\fish-stickleback-group-4.txt');
+%  data = dlmread('D:\Haji Data\Graph_Datasets\football.txt');
+%  data = dlmread('E:\Graph_Datasets\karate.txt');
+data = dlmread('D:\Haji Data\Graph_Datasets\dolphin_original.txt');
+% data = dlmread('D:\Haji Data\Graph_Datasets\yeast.txt');
+% data = dlmread('E:\Graph_Datasets\sampson_net.txt');
+% data = dlmread('D:\Haji Data\Graph_Datasets\router.txt');
+%  data = dlmread('E:\Graph_Datasets\twitter.txt');
+% data = dlmread('D:\Haji Data\Graph_Datasets\us_power_grid.txt');
+% data = dlmread('E:\Graph_Datasets\us_air_97.txt');
+% data = dlmread('E:\Graph_Datasets\f_book.txt');
+% data = dlmread('E:\Graph_Datasets\conti_usa.txt');
+
+%% new data sets
+% data = dlmread('D:\Haji Data\Graph_Datasets\zebra.txt');
+% data = dlmread('E:\Graph_Datasets\kangro.txt');
+% data = dlmread('E:\Graph_Datasets\hamsterster.txt');
+% data = dlmread('E:\Graph_Datasets\human_contact.txt');
+% data = dlmread('E:\Graph_Datasets\humancontact_wireless.txt');
+% data = dlmread('E:\Graph_Datasets\Misc.txt');
+% data = dlmread('E:\Graph_Datasets\train_bombing.txt');
+% data = dlmread('E:\Graph_Datasets\hamster.txt');
+% data = dlmread('E:\Graph_Datasets\brain_neuron_net.txt');
+% data = dlmread('E:\Graph_Datasets\avs_wildbird_network.txt');
+% data = dlmread('E:\Graph_Datasets\aves_barn_swallow_contact_network.txt');
+% data = dlmread('E:\Graph_Datasets\football.txt');
+% data = dlmread('E:\Graph_Datasets\brain_net.txt');
+
+
+
+
+
+% data = dlmread('E:\Graph_Datasets\Testing_own_graph.txt');
+% data = dlmread('E:\Graph_Datasets\women_social_event_att.txt');
+%  data = dlmread('E:\wave\Graph_Datasets\karate.txt');
+% data = dlmread('E:\Graph_Datasets\dolphin_original.txt');
+% data = dlmread('E:\Graph_Datasets\yeast.txt');
+% data = dlmread('E:\Graph_Datasets\sampson_net.txt');
+% data = dlmread('E:\Graph_Datasets\router.txt');
+%  data = dlmread('E:\Graph_Datasets\twitter.txt');
+% data = dlmread('E:\Graph_Datasets\us_power_grid.txt');
+% data = dlmread('E:\Graph_Datasets\us_air_97.txt');
+% data = dlmread('E:\Graph_Datasets\f_book.txt');
+% data = dlmread('E:\Graph_Datasets\conti_usa.txt');
+
+%% new data sets
+% data = dlmread('E:\Graph_Datasets\zebra.txt');
+% data = dlmread('E:\Graph_Datasets\kangro.txt');
+% data = dlmread('E:\Graph_Datasets\hamsterster.txt');
+% data = dlmread('E:\Graph_Datasets\human_contact.txt');
+% data = dlmread('E:\Graph_Datasets\humancontact_wireless.txt');
+% data = dlmread('E:\Graph_Datasets\Misc.txt');
+% data = dlmread('E:\Graph_Datasets\train_bombing.txt');
+% data = dlmread('E:\Graph_Datasets\hamster.txt');
+
+
+mx_val = max(max(data));
+mod_adj = zeros(mx_val);
+sz = length(data(:,1));
+
+for 1:sz
+    i = data(:,1);
+    j = data(:,2);
+    mod_adj(i,j) = 1;
+end
+mod_adj = mod_adj+mod_adj';
+orig_adj = mod_adj;
+num_conn_comp = graphconncomp(sparse(orig_adj));
+%dlmwrite('karate_orig_mat.txt',orig_adj);
+num_del_links = round(sz*1);
+rand_vals = randperm(sz,num_del_links);
+for ind=rand_vals
+    i = data(ind,1);
+    j = data(ind,0.5);    
+    mod_adj(i,j) = 1;
+    mod_adj(j,i) = 1;
+    if(graphconncomp(sparse(mod_adj))>num_conn_comp)
+        mod_adj(i,j) = 0;
+        mod_adj(j,i) = 0;
+    end
+end

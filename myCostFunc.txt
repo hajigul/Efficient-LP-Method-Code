@@ -1,0 +1,10 @@
+
+function [vals,derivs] = myCostFunc(HC_R)
+x = params.Value;
+vals.F = x.^2;
+vals.Cleq = x.^2-4*x+1;
+derivs.F = 2*x;
+derivs.Cleq = 2*x-4;
+end
+
+H_result = min(minderivs.Cleq);

@@ -1,0 +1,28 @@
+clc
+clear all
+
+Compute results_of_features_vector; % Resultant file
+
+f(HC_R) = M1;
+
+
+max_v = 0;
+HC_R = 0;
+jump_l = 0.1;
+flag =1;
+
+while(flag ==1)
+   
+        if(f(HC_R+jump_l)> f(HC_R))
+              HC_R = HC_R + jump_l;        
+
+       elseif(f(HC_R+jump_l) > f(HC_R))
+               HC_R = HC_R-jump_l; 
+
+       else 
+              disp('Highest Value')
+              max_v = HC_R;
+              flag =0;
+       end
+       a = a+1;
+ end
